@@ -1,6 +1,6 @@
 #include "DxLib.h"
 #include "SceneManager.h"
-
+#include "GameMainScene.h"
 /***********************************************
  * プログラムの開始
  ***********************************************/
@@ -18,15 +18,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	SetFontSize(20);		// 文字サイズを設定
 
-	SceneManager sceneMng((AbstractScene*)new Title());
+	SceneManager sceneMng(dynamic_cast<AbstractScene*>(new GameMainScene()));
 	// ゲームループ
-	while (ProcessMessage() == 0 ) {
+	while (ProcessMessage() == 0 ) 
+	{
+		ClearDrawScreen();
 
-		
-		ClearDrawScreeen();
+
         sceneMng.Update();
 		sceneMng.Draw();
-		if (sceneMng.ChangeScene() != nullptr)
+		if (sceneMng.ChangeScene() == nullptr)
 		{
 			DxLib_End();//DXライブラリ使用の修了処理
 
