@@ -1,6 +1,15 @@
 #include "DxLib.h"
 #include "SceneManager.h"
 #include "GameMainScene.h"
+#include "KeyManager.h"
+
+//#define SCREEN_WIDTH 1280;
+//#define SCREEN_HEIGHT 720;
+//#define SCREEN_COLOR_BIT_16;
+
+#define SCREEN_WIDTH	1280	//スクリーンの幅
+#define SCREEN_HEIGHT	720	    //スクリーンの高さ
+#define SCREEN_COLOR	32	    //スクリーンの色
 /***********************************************
  * プログラムの開始
  ***********************************************/
@@ -11,6 +20,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	SetMainWindowText("ShootingGame");
 
 	ChangeWindowMode(TRUE);		// ウィンドウモードで起動
+
+	SetWindowSize(SCREEN_WIDTH,SCREEN_HEIGHT);
+	SetGraphMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_COLOR );
+
+
 
 	if (DxLib_Init() == -1) return -1;	// DXライブラリの初期化処理
 
@@ -24,6 +38,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	{
 		ClearDrawScreen();
 
+		KeyManager::Update();
+		/*KeyManager::;*/
 
         sceneMng.Update();
 		sceneMng.Draw();

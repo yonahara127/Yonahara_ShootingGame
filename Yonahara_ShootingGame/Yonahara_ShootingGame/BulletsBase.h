@@ -16,6 +16,7 @@ public:
 public:
 	virtual void Updete() = 0;
 	virtual void Draw() = 0;
+	virtual bool isScreenOut() = 0;
 	int GetDamage();
 };
 
