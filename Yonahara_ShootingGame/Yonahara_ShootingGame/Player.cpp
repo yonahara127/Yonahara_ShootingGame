@@ -20,8 +20,9 @@ Player::Player(T_Location location)
 
 void Player::Update()
 {
+
 	T_Location newLocation = GetLocation();
-	
+	//プレイヤーの移動
 	if (KeyManager::OnKeyPressed(KEY_INPUT_W))
 	{
 		newLocation.y -= speed.y;
@@ -59,7 +60,7 @@ void Player::Update()
 
 		}
 	}
-
+	//プレイヤーが左クリックしたら弾が出る
 	if (KeyManager::OnMousePressed(MOUSE_INPUT_LEFT))
 	{
 		if (bulletCount<30 && bullets[bulletCount] == nullptr)

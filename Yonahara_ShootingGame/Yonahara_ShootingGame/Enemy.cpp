@@ -12,7 +12,7 @@ struct MoveInformetion
 	int attackPattern;
 };
 
-MoveInformation moveInfo[10] = {
+MoveInformetion moveInfo[10] = {
 	{    640,150,0,1,0,0},
 	{ 1200.4,150,0,2,0,0},
 	{      0,0,1,3,180,1},
