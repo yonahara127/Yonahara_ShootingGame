@@ -7,9 +7,6 @@
 //#define SCREEN_HEIGHT 720;
 //#define SCREEN_COLOR_BIT_16;
 
-#define SCREEN_WIDTH	1280	//スクリーンの幅
-#define SCREEN_HEIGHT	720	    //スクリーンの高さ
-#define SCREEN_COLOR	32	    //スクリーンの色
 /***********************************************
  * プログラムの開始
  ***********************************************/

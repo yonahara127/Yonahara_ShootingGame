@@ -2,6 +2,7 @@
 #include "CharaBase.h"
 #include "Recovery.h"
 #include "Player.h"
+#include "comon.h"
 
 GameMainScene::GameMainScene()
 {
@@ -12,7 +13,8 @@ GameMainScene::GameMainScene()
 	{
 		enemy[i] = nullptr;
 	}
-	enemy[0] = new Enemy(T_Location{ 200,0 });
+	//enemy[0] = new Enemy(T_Location{ 200,0 });
+	enemy[0] = new Enemy(T_Location{ SCREEN_WIDTH /2,-30});
 
 	items = new ItemBase * [10];
 	for (int i = 0; i < 10; i++)
