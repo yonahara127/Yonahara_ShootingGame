@@ -5,35 +5,35 @@
 
 struct MoveInformetion
 {
+	int pattern; //行動パターン
 	T_Location targetLocation;
-	int pattern;
-	int next;
-	int waitTimeFlame;
-	int attackPattern;
+	int next; //次の配列番号
+	int waitTimeFlame; //待ち時間
+	int attackPattern; //攻撃の種類
 };
 
-MoveInformetion moveInfo[10] = {
-	{    640,150,0,1,0,0},
-	{ 1200.4,150,0,2,0,0},
-	{      0,0,1,3,180,1},
-	{ 80.2,150,0,4,  0,2},
-	{    0,  0,1,5,180,1},
-	{1200.4,150, 0, 2, 0,1},
+MoveInformetion moveInfo[5] = {
+	{0,    640, 150, 1,   0, 0},
+	{0, 1200.4, 150, 2,   0, 2},
+	{1,      0,   0, 3, 300, 1},
+	{0,   80.2, 150, 4,   0, 2},
+	{1,      0,   0, 1, 300, 1}
 };
-
-T_Location locations[3] = {
-	{ 640,150},
-	{ 1200.4,150},
-	{ 80.2,150},
-};
-
-int next[3] = {
-	1,
-	2,
-	1
-};
+//
+//T_Location locations[3] = {
+//	{ 640,150},
+//	{ 1200.4,150},
+//	{ 80.2,150},
+//};
+//
+//int next[3] = {
+//	1,
+//	2,
+//	1
+//};
 
 int current = 0;
+int waitTime = 0;
 
 Enemy::Enemy(T_Location location):CharaBase(location,20.f,T_Location{5,1})
 ,hp(10),point(10),shotNum(0)
@@ -47,7 +47,7 @@ Enemy::Enemy(T_Location location):CharaBase(location,20.f,T_Location{5,1})
 void Enemy::Update() 
 {
 
-	Move();
+	//Move();
 
 	/*T_Location newLocation = GetLocation();
 	newLocation.y +=speed.y;
@@ -77,7 +77,23 @@ void Enemy::Update()
 		newLocation.x += speed.x;
 		SetLocation(newLocation);
 	}*/
+	switch (moveInfo[current].pattern)
+	{
+	case 0:
+		Move();
+		break;
+	case 1:
+		waitTime++;
+		if (moveInfo[current].waitTimeFlame <= waitTime)
+		{
+			waitTime = 0;
+			current = moveInfo[current].next;
+		}
+		break;
 
+	default:
+		break;
+	}
 	int bulletCount;
 	for (bulletCount = 0; bulletCount < 30; bulletCount++)
 	{
@@ -96,16 +112,37 @@ void Enemy::Update()
 
 		}
 	}
-	
+	//if (moveInfo[current].attackPattern != 0)
+	//{
+	//	if (bulletCount < 30 && bullets[bulletCount] == nullptr)
+	//	{
+	//		if (moveInfo[current].attackPattern == 1)
+	//		{
+	//			//弾を作る
+	//			bullets[bulletCount] =
+	//				new CircleBullet(GetLocation(), 2.f, (20 * shotNum));
+	//		}
+	//		
+	//		shotNum++;
+	//		//bullets[bulletCount] = new StraightBullets(GetLocation(), T_Location{ 0,-2 });
+	//	}
+	//}
+
+	if (moveInfo[current].attackPattern != 0)
+	{
 		if (bulletCount < 30 && bullets[bulletCount] == nullptr)
 		{
-			//弾を作る
-			bullets[bulletCount] =
-				new CircleBullet(GetLocation(), 2.f, (20 * shotNum));
-			shotNum++;
-			//bullets[bulletCount] = new StraightBullets(GetLocation(), T_Location{ 0,-2 });
+			if (moveInfo[current].attackPattern == 1)
+			{
+				bullets[bulletCount] = new StraightBullets (GetLocation(), T_Location{ 0,2 });
+			}
+			else if (moveInfo[current].attackPattern == 2)
+			{
+				shotNum++;
+				bullets[bulletCount] = new CircleBullet (GetLocation(), 2.f, (20 * shotNum));
+			}
 		}
-		
+	}
 
 }
 void Enemy::Draw() 
@@ -149,51 +186,52 @@ void Enemy::Move()
 	T_Location nextLocation = GetLocation();
 
 	
-	if ((nextLocation.y == locations[current].y) &&
-		(nextLocation.x == locations[current].x))
+	if ((nextLocation.x == moveInfo[current].targetLocation.x) &&
+		(nextLocation.y == moveInfo[current].targetLocation.y))
 	{
-		current = next[current];
+		current = moveInfo[current].next;
+		return;
 	}
 	else
 	{
-		if (nextLocation.y != locations[current].y)
+		if (nextLocation.y != moveInfo[current].targetLocation.y)
 		{
-			if (nextLocation.y < locations[current].y)
+			if (nextLocation.y < moveInfo[current].targetLocation.y)
 			{
 				nextLocation.y += speed.y;
-				if ((GetLocation().y <= locations[current].y) &&
-					(locations[current].y <= nextLocation.y))
+				if ((moveInfo[current].targetLocation.y <= moveInfo[current].targetLocation.y) &&
+					(moveInfo[current].targetLocation.y <= nextLocation.y))
 				{
-					nextLocation.y = locations[current].y;
+					nextLocation.y = moveInfo[current].targetLocation.y;
 				}
 			}
 			else
 			{
 				nextLocation.y -= speed.y;
-				if ((nextLocation.y <= locations[current].y) &&
-					(locations[current].y <= GetLocation().y))
+				if ((nextLocation.y <= moveInfo[current].targetLocation.y) &&
+					(moveInfo[current].targetLocation.y <= GetLocation().y))
 				{
-					nextLocation.y = locations[current].y;
+					nextLocation.y = moveInfo[current].targetLocation.y;
 				}
 			}
 		}
-		if (nextLocation.x != locations[current].x)
+		if (nextLocation.x != moveInfo[current].targetLocation.x)
 		{
-			if (nextLocation.x < locations[current].x)
+			if (nextLocation.x < moveInfo[current].targetLocation.x)
 			{
 				nextLocation.x += speed.x;
-				if ((GetLocation().x <= locations[current].x) &&
-					(locations[current].x <= nextLocation.x))
+				if ((GetLocation().x <= moveInfo[current].targetLocation.x) &&
+					(moveInfo[current].targetLocation.x <= nextLocation.x))
 				{
-					nextLocation.x = locations[current].x;
+					nextLocation.x = moveInfo[current].targetLocation.x;
 				}
 			}
 			else {
 				nextLocation.x -= speed.x;
-				if ((nextLocation.x <= locations[current].x) &&
-					(locations[current].x <= GetLocation().x))
+				if ((nextLocation.x <= moveInfo[current].targetLocation.x) &&
+					(moveInfo[current].targetLocation.x <= GetLocation().x))
 				{
-					nextLocation.x = locations[current].x;
+					nextLocation.x = moveInfo[current].targetLocation.x;
 				}
 			}
 		}
