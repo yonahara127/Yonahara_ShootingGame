@@ -1,20 +1,14 @@
 #pragma once
 #include "AbstractScene.h"
-#include "Player.h"
-#include "Enemy.h"
-#include "ItemBase.h"
-#include "Title.h"
-class GameMainScene :public AbstractScene
+class Title :public AbstractScene
 {
 private:
-	Player* player;
-	Enemy** enemy;
-	ItemBase** items;
-	int Deletenemy;
+	
+
 public:
-	GameMainScene();
+	Title();
 	//デストラクタ
-	virtual ~GameMainScene()
+	virtual ~Title()
 	{};
 
 public:

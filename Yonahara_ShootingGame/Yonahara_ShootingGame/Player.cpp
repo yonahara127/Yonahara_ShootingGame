@@ -7,7 +7,7 @@
 Player::Player(T_Location location)
 	: CharaBase(location, 10.f, T_Location{2,2}),score(0),life(20)
 {
-
+	
 	/*BulletsBase** bullets*/
 
 	bullets = new BulletsBase * [30];
@@ -25,6 +25,7 @@ void Player::Update()
 	//ÉvÉåÉCÉÑÅ[ÇÃà⁄ìÆ
 	if (KeyManager::OnKeyPressed(KEY_INPUT_W))
 	{
+		
 		newLocation.y -= speed.y;
 	}
 	if (KeyManager::OnKeyPressed(KEY_INPUT_A))
@@ -71,6 +72,7 @@ void Player::Update()
 }
 void Player::Draw()
 {
+	PlayerImage = LoadGraph("images/pac1.png");
 #define _DEBUG_MODE_PLAYE_
 
 #ifdef _DEBUG_MODE_PLAYE_

@@ -156,7 +156,9 @@
     <ClCompile Include="CircleBullet.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="E_ITEM_TYPE.cpp" />
+    <ClCompile Include="GameClear.cpp" />
     <ClCompile Include="GameMainScene.cpp" />
+    <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="ItemBase.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="main.cpp" />
@@ -165,6 +167,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="StraightBullets.cpp" />
+    <ClCompile Include="Title.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h" />
@@ -174,7 +177,9 @@
     <ClInclude Include="comon.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="E_ITEM_TYPE.h" />
+    <ClInclude Include="GameClear.h" />
     <ClInclude Include="GameMainScene.h" />
+    <ClInclude Include="GameOver.h" />
     <ClInclude Include="ItemBase.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="Player.h" />
@@ -182,6 +187,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="StraightBullets.h" />
+    <ClInclude Include="Title.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,20 +1,14 @@
 #pragma once
 #include "AbstractScene.h"
-#include "Player.h"
-#include "Enemy.h"
-#include "ItemBase.h"
-#include "Title.h"
-class GameMainScene :public AbstractScene
+class GameClear :public AbstractScene
 {
 private:
-	Player* player;
-	Enemy** enemy;
-	ItemBase** items;
-	int Deletenemy;
+	
+
 public:
-	GameMainScene();
+	GameClear();
 	//デストラクタ
-	virtual ~GameMainScene()
+	virtual ~GameClear()
 	{};
 
 public:
@@ -25,4 +19,5 @@ public:
 	//シーンの変更処理
 	virtual AbstractScene* ChangeScene() override;
 };
+
 

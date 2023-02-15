@@ -5,7 +5,7 @@ class Player :public CharaBase
 private:
 	int score;
 	int life;
-
+	int PlayerImage;
 public:
 	Player(T_Location location);
 public:

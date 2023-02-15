@@ -3,6 +3,11 @@
 #include "Recovery.h"
 #include "Player.h"
 #include "comon.h"
+#include "Title.h"
+#include "KeyManager.h"
+#include "DxLib.h"
+#include "GameClear.h"
+#include "GameOver.h"
 
 GameMainScene::GameMainScene()
 {
@@ -190,5 +195,21 @@ void GameMainScene::Draw() const
 //ƒV[ƒ“‚Ì•ÏXˆ—
 AbstractScene* GameMainScene::ChangeScene()
 {
+	int enemyCount;
+	if (player->LifeCheck() == true)
+	{
+		return new GameOver;
+	}
+	for(enemyCount = 0; enemyCount <10; enemyCount++)
+	{
+		if (enemy[enemyCount] != nullptr)
+		{
+			break;
+		}
+		else if (enemy[9] == nullptr)
+		{
+			return new GameClear;
+		}
+	}
 	return this;
 }
