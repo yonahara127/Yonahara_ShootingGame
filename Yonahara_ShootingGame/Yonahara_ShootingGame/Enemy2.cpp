@@ -1,14 +1,14 @@
 #include "DxLib.h"
-#include "Enemy.h"
+#include "Enemy2.h"
 #include "StraightBullets.h"
 #include "CircleBullet.h"
-#include "StraightBullets2.h"
 
 
 
 
 
-void Enemy::inputCSV()
+
+void Enemy2::inputCSV()
 {
 	FILE* fp; //FILE構造体
 	errno_t error; //fopen_sのエラー確認
@@ -23,16 +23,16 @@ void Enemy::inputCSV()
 	{
 		//ファイルを開いた
 		char line[100];
-		for(int i = 0; fgets(line, 100, fp) !=NULL; i++)
-		//while (fgets(line, 100, fp) !=NULL)
+		for (int i = 0; fgets(line, 100, fp) != NULL; i++)
+			//while (fgets(line, 100, fp) !=NULL)
 		{
 			sscanf_s(line, "%d, %f, %f, %d, %d, %d",
 				&moveInfo[i].pattern,
-			    &moveInfo[i].targetLocation.x,
-			    &moveInfo[i].targetLocation.y,
-			    &moveInfo[i].next,
-			    &moveInfo[i].waitTimeFlame,
-			    &moveInfo[i].attackPattern);
+				&moveInfo[i].targetLocation.x,
+				&moveInfo[i].targetLocation.y,
+				&moveInfo[i].next,
+				&moveInfo[i].waitTimeFlame,
+				&moveInfo[i].attackPattern);
 		}
 
 		return;
@@ -40,8 +40,8 @@ void Enemy::inputCSV()
 	fclose(fp); //ファイルを閉じる
 }
 
-Enemy::Enemy(T_Location location):CharaBase(location,20.f,T_Location{5,1})
-,hp(10),point(10),shotNum(0)
+Enemy2::Enemy2(T_Location location) :CharaBase(location, 20.f, T_Location{ 90,1 })
+, hp(10), point(10), shotNum(0)
 {
 	inputCSV();
 	bullets = new BulletsBase * [30];
@@ -50,7 +50,7 @@ Enemy::Enemy(T_Location location):CharaBase(location,20.f,T_Location{5,1})
 		bullets[i] = nullptr;
 	}
 }
-void Enemy::Update() 
+void Enemy2::Update()
 {
 
 	//Move();
@@ -108,7 +108,7 @@ void Enemy::Update()
 			break;
 		}
 		bullets[bulletCount]->Updete();
-		
+
 
 		//画面外に行ったら玉を消す
 		if (bullets[bulletCount]->isScreenOut())
@@ -140,23 +140,23 @@ void Enemy::Update()
 		{
 			if (moveInfo[current].attackPattern == 1)
 			{
-				bullets[bulletCount] = new StraightBullets (GetLocation(), T_Location{ 0,2 });
+				bullets[bulletCount] = new StraightBullets(GetLocation(), T_Location{ 0,2 });
 			}
 			else if (moveInfo[current].attackPattern == 2)
 			{
 				shotNum++;
-				bullets[bulletCount] = new CircleBullet (GetLocation(), 2.f, (20 * shotNum));
+				bullets[bulletCount] = new CircleBullet(GetLocation(), 2.f, (20 * shotNum));
 			}
 			/*else if (moveInfo[current].attackPattern == 3)
 			{
-				shotNum++;
-				bullets[bulletCount] = new StraightBullets2(GetLocation(), T_Location{ 5,2 });
+				shotNum--;
+				bullets[bulletCount] = new CircleBullet(GetLocation(), 2.f, (50 * shotNum));
 			}*/
 		}
 	}
 
 }
-void Enemy::Draw() 
+void Enemy2::Draw()
 {
 	DrawCircle(GetLocation().x, GetLocation().y, GetRadius(), GetColor(255, 0, 255));
 
@@ -169,7 +169,7 @@ void Enemy::Draw()
 		bullets[bulletCount]->Draw();
 	}
 }
-void Enemy::Hit(int damage)
+void Enemy2::Hit(int damage)
 {
 	if (0 < damage)
 	{
@@ -180,23 +180,23 @@ void Enemy::Hit(int damage)
 		}
 	}
 }
-bool Enemy::HpCHeck() 
+bool Enemy2::HpCHeck()
 {
 	bool ret = (hp <= 0);
 	return ret;
-	
+
 }
-int Enemy::GetPoint() 
+int Enemy2::GetPoint()
 {
 	return point;
 }
 
 
-void Enemy::Move()
+void Enemy2::Move()
 {
 	T_Location nextLocation = GetLocation();
 
-	
+
 	if ((nextLocation.x == moveInfo[current].targetLocation.x) &&
 		(nextLocation.y == moveInfo[current].targetLocation.y))
 	{

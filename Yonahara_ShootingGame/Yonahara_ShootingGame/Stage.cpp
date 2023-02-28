@@ -1,3 +1,4 @@
+#include "Stage.h"
 #include "GameMainScene.h"
 #include "CharaBase.h"
 #include "Recovery.h"
@@ -8,31 +9,28 @@
 #include "DxLib.h"
 #include "GameClear.h"
 #include "GameOver.h"
-#include "Stage.h"
 
-GameMainScene::GameMainScene()
+Stage::Stage()
 {
-	T_Location location = T_Location{ 20,100 };
+	T_Location location = T_Location{ 600,600 };
 	player = new Player(location);
-	enemy = new Enemy * [10];
+	enemy = new Enemy2 * [10];
 	for (int i = 0; i < 10; i++)
 	{
 		enemy[i] = nullptr;
 	}
 	//enemy[0] = new Enemy(T_Location{ 200,0 });
-	enemy[0] = new Enemy(T_Location{ SCREEN_WIDTH /2,-30});
+	enemy[0] = new Enemy2(T_Location{ SCREEN_WIDTH / 2,-30 });
 
 	items = new ItemBase * [10];
 	for (int i = 0; i < 10; i++)
 	{
 		items[i] = nullptr;
 	}
-
-
 }
 
 //描画以外の更新を実装する
-void GameMainScene::Update()
+void Stage::Update()
 {
 	player->Update();
 
@@ -173,7 +171,7 @@ void GameMainScene::Update()
 }
 
 //描画に関する事を実装
-void GameMainScene::Draw() const
+void Stage::Draw() const
 {
 
 	player->Draw();
@@ -186,7 +184,7 @@ void GameMainScene::Draw() const
 		}
 		enemy[enemyCount]->Draw();
 	}
-	for (int i = 0; i < 50; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		if (items[i] == nullptr)
 		{
@@ -196,14 +194,14 @@ void GameMainScene::Draw() const
 	}
 }
 //シーンの変更処理
-AbstractScene* GameMainScene::ChangeScene()
+AbstractScene* Stage::ChangeScene()
 {
 	int enemyCount;
 	if (player->LifeCheck() == true)
 	{
 		return new GameOver;
 	}
-	for(enemyCount = 0; enemyCount <10; enemyCount++)
+	for (enemyCount = 0; enemyCount < 10; enemyCount++)
 	{
 		if (enemy[enemyCount] != nullptr)
 		{
@@ -211,7 +209,7 @@ AbstractScene* GameMainScene::ChangeScene()
 		}
 		else if (enemy[9] == nullptr)
 		{
-			return new Stage;
+			return new GameClear;
 		}
 	}
 	return this;

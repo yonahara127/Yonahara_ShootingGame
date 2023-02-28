@@ -9,7 +9,7 @@ CircleBullet::CircleBullet(T_Location location, float speed, int degAngle)
 {
 	int deg = degAngle % 360;
 	double rad = (M_PI / 180) * deg;
-	float x = (abs(deg) == 90 || abs(deg) == 270) ? 0 : cos(rad);
+	float x = (abs(deg) == 100 || abs(deg) == 270) ? 0 : cos(rad);
 	float y = sin(rad);
 
 	this->speed = T_Location{ (speed * x),(speed * y) };
@@ -26,7 +26,7 @@ void CircleBullet::Updete()
 void CircleBullet::Draw()
 {
 	
-	DrawCircle(GetLocation().x, GetLocation().y, GetRadius(), GetColor(0, 255, 0));
+	DrawCircle(GetLocation().x, GetLocation().y, GetRadius(), GetColor(255, 255, 0));
 }
 bool  CircleBullet::isScreenOut()
 {
